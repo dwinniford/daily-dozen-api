@@ -17,11 +17,12 @@ RSpec.describe "/recipes", type: :request do
   # Recipe. As you add validations to Recipe, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {label: "yummy chicken", source: "serious eats"}
+    
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {label: nil, source: nil}
   }
 
   # This should return the minimal set of values that should be in the headers
@@ -77,7 +78,7 @@ RSpec.describe "/recipes", type: :request do
         post recipes_url,
              params: { recipe: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
   end
@@ -85,7 +86,7 @@ RSpec.describe "/recipes", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {label: "yummy fish", source: "funny eats"}
       }
 
       it "updates the requested recipe" do
