@@ -17,11 +17,11 @@ RSpec.describe "/plans", type: :request do
   # Plan. As you add validations to Plan, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {title: "healthy meal plan", description: "mediteranean style"}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {title: nil}
   }
 
   # This should return the minimal set of values that should be in the headers
@@ -77,7 +77,7 @@ RSpec.describe "/plans", type: :request do
         post plans_url,
              params: { plan: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
   end
@@ -85,23 +85,24 @@ RSpec.describe "/plans", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {title: "less healthy day", desciption: "mcdonalds theme"}
       }
 
       it "updates the requested plan" do
         plan = Plan.create! valid_attributes
         patch plan_url(plan),
-              params: { plan: invalid_attributes }, headers: valid_headers, as: :json
-        plan.reload
-        skip("Add assertions for updated state")
+              params: { plan: new_attributes }, headers: valid_headers, as: :json
+        # plan.reload
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
 
       it "renders a JSON response with the plan" do
         plan = Plan.create! valid_attributes
         patch plan_url(plan),
-              params: { plan: invalid_attributes }, headers: valid_headers, as: :json
+              params: { plan: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
 
@@ -111,7 +112,7 @@ RSpec.describe "/plans", type: :request do
         patch plan_url(plan),
               params: { plan: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
   end
