@@ -92,17 +92,17 @@ RSpec.describe "/recipes", type: :request do
       it "updates the requested recipe" do
         recipe = Recipe.create! valid_attributes
         patch recipe_url(recipe),
-              params: { recipe: invalid_attributes }, headers: valid_headers, as: :json
+              params: { recipe: new_attributes }, headers: valid_headers, as: :json
         recipe.reload
-        skip("Add assertions for updated state")
+        expect(response).to have_http_status(:ok)
       end
 
       it "renders a JSON response with the recipe" do
         recipe = Recipe.create! valid_attributes
         patch recipe_url(recipe),
-              params: { recipe: invalid_attributes }, headers: valid_headers, as: :json
+              params: { recipe: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe "/recipes", type: :request do
         patch recipe_url(recipe),
               params: { recipe: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
       end
     end
   end
