@@ -48,7 +48,9 @@ RSpec.describe "/recipes", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      recipe = Recipe.create! valid_attributes
+      plan = Plan.create! valid_plan_attributes
+      recipe = plan.recipes.build(valid_attributes)
+      recipe.save 
       get recipe_url(recipe), as: :json
       expect(response).to be_successful
     end
